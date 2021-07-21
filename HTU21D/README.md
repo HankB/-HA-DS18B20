@@ -25,7 +25,9 @@ sensor program and pipe the output to `mosquitto_pub`.
 
 ### To build
 
-    `sudo apt install git vim libssl-dev wiringpi libmosquitto-dev libmosquitto1`
+```text
+sudo apt install -y git vim libssl-dev wiringpi libmosquitto-dev libmosquitto1`
+```
     
 The sensor program itself does not need libmosquitto packages. They are only
 required for the MQTT related preograms which are left here only for historic
@@ -33,15 +35,17 @@ reasons. (vim technically not required if you prefer a different editor. ;) )
     
 * Enable i2c 
 
-    `sudo raspi-config` and look for "Interfacing Options"
+```text
+sudo raspi-config # and look for "Interfacing Options"
+```
 
 ## Build executable
 
-`make HTU21D_test`  # app to test HTU21D readings.
-
-`make test_MQTT`   # app to test MQTT publishing
-
-`make`             # build application
+```text
+make HTU21D_test  # app to test HTU21D readings.
+make test_MQTT    # app to test MQTT publishing
+make              # build application
+```
 
 ## Installation of binaries only
 
