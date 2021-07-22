@@ -2,6 +2,9 @@
 
 # command line arguments: description [host]
 # topic example "home_automation/haut/dining_room/temp_humidity"
+# sample crontab entry, every minute
+* * * * * /home/pi/bin/temp_humidity_cron.sh outside_temp_humidity mqtt >/tmp/temp_humidity_cron.txt 2>&1
+
 
 if [ $# -eq 0 ]
 then
