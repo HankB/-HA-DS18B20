@@ -151,8 +151,8 @@ parser.add_argument("-v", "--verbosity",
                     help="increase output verbosity",
                     action="store_true")
 parser.add_argument("-l", "--location", type=str,
-                    help="subject [default \"basement\"]",
-                    default="basement")
+                    help="subject [default \"basement_frzr\"]",
+                    default="basement_frzr")
 parser.add_argument("-i", "--interval", type=int,
                     help="interval, minutes [default 5]",
                     default=5)
