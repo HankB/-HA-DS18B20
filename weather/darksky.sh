@@ -30,5 +30,5 @@ PATH=${HOME}/bin:$PATH
 DARKSKY_REPLY=$(darksky.py -l $location -k $key 2>>/tmp/darksky.txt)
 if [ ! -z "$DARKSKY_REPLY" ]
 then
-    echo -n $DARKSKY_REPLY| mosquitto_pub -s -t home_automation/$HOSTNAME/darksky/drksky_weather -h $host
+    echo -n $DARKSKY_REPLY| mosquitto_pub -s -t HA/$HOSTNAME/darksky/weather -h $host
 fi
