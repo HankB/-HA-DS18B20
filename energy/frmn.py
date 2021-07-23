@@ -112,7 +112,7 @@ client.on_connect = on_connect
 client.on_message = on_message
 client.on_publish = on_publish
 
-client.connect("oak", 1883, 60)	# connect to my MQTT server
+client.connect("mqtt", 1883, 60)	# connect to my MQTT server
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
@@ -159,7 +159,7 @@ parser.add_argument("-i", "--interval", type=int,
 args = parser.parse_args()
 verbose = args.verbosity
 
-topic = "home_automation/"+socket.gethostname()+"/"+args.location+"/freezer_power"
+topic = "HA/"+socket.gethostname()+"/"+args.location+"/power"
 
 
 ip = args.target
