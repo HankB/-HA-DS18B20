@@ -2,6 +2,9 @@
 
 # command line arguments: description [host]
 # topic example "home_automation/haut/dining_room/temp_humidity"
+# sample crontab entry, every minute
+# * * * * * /home/pi/bin/temp_humidity_cron.sh outside_temp_humidity mqtt >/tmp/temp_humidity_cron.txt 2>&1
+
 
 if [ $# -eq 0 ]
 then
@@ -27,4 +30,4 @@ HOSTNAME=`hostname`
 PATH=${HOME}/bin:$PATH
 
 HTU21D_report 2>/tmp/temp_humidity_cron.txt | \
-mosquitto_pub -s -t "home_automation/$HOSTNAME/$description/temp_humidity" -h $host
+mosquitto_pub -s -t "HA/$HOSTNAME/$description/temp_humidity" -h $host
