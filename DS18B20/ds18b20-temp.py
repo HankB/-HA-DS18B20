@@ -8,6 +8,7 @@ for original code
 import glob
 import time
 import json
+import syslog
 
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
@@ -39,7 +40,14 @@ def publish_temperature(timeStamp, temperature):
     payload_json = json.dumps({ "t": timeStamp, "temp":temperature })
     print(payload_json)
 
-(temp_c, temp_f) = read_temp()
+while(True):
+    (temp_c, temp_f) = read_temp()
+    if temp_f < 179:
+        break
+    else:
+        syslog.syslog(syslog.LOG_ERR, 'Excess temp from DS18B20')
+        time.sleep(1)
+
 publish_temperature(timeStamp, temp_f)
 
 
