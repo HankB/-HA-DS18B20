@@ -7,6 +7,7 @@ for original code
 """
 import glob
 import time
+import json
 
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
@@ -35,8 +36,8 @@ def read_temp():
 timeStamp = int(time.time())
 
 def publish_temperature(timeStamp, temperature):
-    payload = "{0:12.0F}, {1:3.1F}".format(timeStamp,temperature)
-    print(payload)
+    payload_json = json.dumps({ "t": timeStamp, "temp":temperature })
+    print(payload_json)
 
 (temp_c, temp_f) = read_temp()
 publish_temperature(timeStamp, temp_f)
