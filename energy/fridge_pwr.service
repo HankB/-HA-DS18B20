@@ -8,7 +8,7 @@ ExecStart=/home/hbarta/bin/frmn.py  -n TPplug06 -l kitchen
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=freezer
+SyslogIdentifier=fridge
 User=hbarta
 Group=hbarta
 
