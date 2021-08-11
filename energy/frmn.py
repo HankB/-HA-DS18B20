@@ -32,7 +32,7 @@ import re
 import time
 import json
 
-version = 0.4
+version = 0.5
 verbose = 0
 
 """
@@ -156,7 +156,7 @@ parser.add_argument("-l", "--location", type=str,
                     help="subject [default \"basement_frzr\"]",
                     default="basement_frzr")
 parser.add_argument("-i", "--interval", type=int,
-                    help="interval, minutes [default 5]",
+                    help="interval, minutes [default 5][0 immediate single pass]",
                     default=5)
 args = parser.parse_args()
 verbose = args.verbosity
@@ -174,7 +174,8 @@ else:
     addr = args.target
     
 #args.interval = 5		# minutes
-delay_to_interval(args.interval)
+if args.interval > 0:
+    delay_to_interval(args.interval)
 
 while True:    
     timestamp = int(time.time())
@@ -193,4 +194,7 @@ while True:
 
     if verbose: print("c,v,p", current, voltage, power)
     publish_power(timestamp, current, voltage, power)
-    delay_to_interval(args.interval)
+    if args.interval > 0:
+        delay_to_interval(args.interval)
+    else:
+        break;
