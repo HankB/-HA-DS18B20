@@ -27,6 +27,12 @@ optional arguments:
 hbarta@olive05:/mnt/home/hbarta/Programming/home_automation-MQTT-sensors/energy$ 
 ```
 
+### systemd
+
+```text
+sudo systemctl status freezer_pwr
+sudo systemctl status fridge_pwr
+```
 ## Modules
 
 ### Requirements
