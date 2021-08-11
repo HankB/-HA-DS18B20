@@ -26,7 +26,7 @@ sensor program and pipe the output to `mosquitto_pub`.
 ### To build
 
 ```text
-sudo apt install -y git vim libssl-dev wiringpi libmosquitto-dev libmosquitto1`
+sudo apt install -y git vim libssl-dev wiringpi libmosquitto-dev libmosquitto1
 ```
     
 The sensor program itself does not need libmosquitto packages. They are only
