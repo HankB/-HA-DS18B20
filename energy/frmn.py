@@ -22,7 +22,7 @@ and are covered by the following copyright.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+Now modified to format payload as JSON
 """
 
 import socket
@@ -30,8 +30,9 @@ import argparse
 import paho.mqtt.client as mqtt
 import re
 import time
+import json
 
-version = 0.3
+version = 0.5
 verbose = 0
 
 """
@@ -122,10 +123,11 @@ client.loop_start()
 ### end of included code
 
 def publish_power(timestamp, I, V, W): # I, V, P => amps, volts. watts
-    payload = "{0:12.0F}, {1:3.2F}, {2:3.1F}, {3:3.1F}" \
-            .format(timestamp,float(I), float(V), float(W))
-    if verbose: print("publishing", payload)
-    client.publish(topic,payload, qos=0, retain=True)    
+    #payload = "{0:12.0F}, {1:3.2F}, {2:3.1F}, {3:3.1F}" \
+            #.format(timestamp,float(I), float(V), float(W))
+    payload_json = json.dumps({ "t": timestamp, "current":I, "volts":V, "watts":W })
+    if verbose: print("publishing", payload_json)
+    client.publish(topic,payload_json, qos=0, retain=True)    
 
 """ 
 Delay to the next minute interval some integral number of intervals
@@ -154,7 +156,7 @@ parser.add_argument("-l", "--location", type=str,
                     help="subject [default \"basement_frzr\"]",
                     default="basement_frzr")
 parser.add_argument("-i", "--interval", type=int,
-                    help="interval, minutes [default 5]",
+                    help="interval, minutes [default 5][0 immediate single pass]",
                     default=5)
 args = parser.parse_args()
 verbose = args.verbosity
@@ -172,7 +174,8 @@ else:
     addr = args.target
     
 #args.interval = 5		# minutes
-delay_to_interval(args.interval)
+if args.interval > 0:
+    delay_to_interval(args.interval)
 
 while True:    
     timestamp = int(time.time())
@@ -191,4 +194,7 @@ while True:
 
     if verbose: print("c,v,p", current, voltage, power)
     publish_power(timestamp, current, voltage, power)
-    delay_to_interval(args.interval)
+    if args.interval > 0:
+        delay_to_interval(args.interval)
+    else:
+        break;

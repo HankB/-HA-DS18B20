@@ -69,23 +69,10 @@ else:
 
 # parse response
 cont = json.loads(r)
-if verbose: eprint("cont:", cont)
+if verbose: eprint("cont:", json.dumps(cont))
 
 if verbose: eprint("\nr\n:", r)
-
-if verbose: eprint("cont[currently][time]:", cont['currently']['time'])
-if verbose: eprint("cont[currently][temperature]:", cont['currently']['temperature'])
-if verbose: eprint("cont[currently][humidity]:", cont['currently']['humidity'])
-if verbose: eprint("cont[currently][windBearing]:", cont['currently']['windBearing'])
-if verbose: eprint("cont[currently][windSpeed]:", cont['currently']['windSpeed'])
-if verbose: eprint("cont[currently][summary]:", cont['currently']['summary'])
-
-# write values of interestweather to stdout
-print(  timestamp, 
-        cont['currently']['time'], 
-        cont['currently']['temperature'], 
-        cont['currently']['humidity']*100, 
-        cont['currently']['windBearing'], 
-        cont['currently']['windSpeed'],
-        cont['currently']['summary'], sep=', ', end='')
+msg_json={"t":timestamp, "msg":cont}
+# write entire reply to stdout
+print( json.dumps(msg_json), end='')
 sys.exit(0)
