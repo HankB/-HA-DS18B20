@@ -19,7 +19,7 @@ int main ()
 		exit (-1);
 	}
 	
-    printf("%ld, %5.2f, %5.2f", time(0),
+	    printf("{\"t\": %ld, \"temp\":%5.1f, \"humid\":%5.1f}", time(0),
             getTemperature(fd)/5.0*9.0+32, getHumidity(fd));
 	
 	return 0;
