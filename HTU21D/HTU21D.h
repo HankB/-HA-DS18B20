@@ -6,10 +6,16 @@
 #define   HTU21D_TEMP     0xF3
 #define   HTU21D_HUMID    0xF5
 
+// struct to encapsulate raw and processed values
+typedef struct {
+	double		val;	// processed result
+	unsigned char	buf[4];	// raw reading
+} result;
+
 // Get temperature
-double getTemperature(int fd);
+result getTemperature(int fd);
 
 // Get humidity
-double getHumidity(int fd);
+result getHumidity(int fd);
 
 #endif
