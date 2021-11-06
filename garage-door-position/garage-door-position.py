@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
+import statistics
 
 # --------------------------------------------------------------------
 # PINS MAPPING AND SETUP
@@ -71,7 +72,12 @@ try:
     for i in range(reading_count):
         readings.append(distance())
         time.sleep(0.1)
-    print(readings)
+    selected = statistics.median(readings)
+    if selected > 40:
+        position = "open"
+    else:
+        position = "closed"
+    print(selected, position, readings)
 
 finally:
     GPIO.cleanup()
