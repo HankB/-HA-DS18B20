@@ -12,6 +12,10 @@ A Python script will take a single measurement which will then be piped to `mosq
 
 An alternative is to poll the sensor and only publish changes in state. The concern with that is a missed MQTT message would result in inaction for the lighting. Initial effort will be to record 1/second readings in order to check for false open/closed inferences. The message will include all readings captured along with the one chosen to determine position.
 
+## Usage
+
+```text
+scp garage-door-position.py pi@dorman://home/pi/testbin
 ## Errata
 
 It will be wise to filter saving these messages to avoid flooding the MQTT message database with these messages. It will also be necessary to schedule these by means other than `cron` since granularity of `cron` timing is 1/minute.
