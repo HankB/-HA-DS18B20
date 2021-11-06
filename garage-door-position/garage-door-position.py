@@ -73,7 +73,7 @@ try:
         readings.append(distance())
         time.sleep(0.1)
     selected = statistics.median(readings)
-    if selected > 40:
+    if selected < 40:
         position = "open"
     else:
         position = "closed"
