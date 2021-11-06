@@ -2,6 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 import statistics
+import json
 
 # --------------------------------------------------------------------
 # PINS MAPPING AND SETUP
@@ -68,6 +69,8 @@ def distance():
 reading_count = 5
 
 try:
+    timestamp=int(time.time());
+
     readings = []
     for i in range(reading_count):
         readings.append(distance())
@@ -77,7 +80,9 @@ try:
         position = "open"
     else:
         position = "closed"
-    print(selected, position, readings)
+    payload_json = json.dumps({ "t": timestamp, "position":position, 
+        "selected":selected, "readings":readings })
+    print(payload_json)
 
 finally:
     GPIO.cleanup()
