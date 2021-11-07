@@ -16,6 +16,12 @@ An alternative is to poll the sensor and only publish changes in state. The conc
 
 ```text
 scp garage-door-position.py pi@dorman://home/pi/testbin
+# on dorman
+/home/pi/testbin/garage-door-position.py | mosquitto_pub -l -t "DEV/${HOSTNAME}/garage/door" -h mqtt
+# on any
+mosquitto_sub -v -h mqtt -t DEV/\#
+```
+
 ## Errata
 
 It will be wise to filter saving these messages to avoid flooding the MQTT message database with these messages. It will also be necessary to schedule these by means other than `cron` since granularity of `cron` timing is 1/minute.
