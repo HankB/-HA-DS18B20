@@ -67,22 +67,28 @@ def distance():
 
 
 reading_count = 5
+previous_position = "unknown"
 
 try:
-    timestamp=int(time.time());
+    while True:
+        timestamp=int(time.time());
 
-    readings = []
-    for i in range(reading_count):
-        readings.append(distance())
-        time.sleep(0.1)
-    selected = statistics.median(readings)
-    if selected < 40:
-        position = "open"
-    else:
-        position = "closed"
-    payload_json = json.dumps({ "t": timestamp, "position":position, 
-        "selected":selected, "readings":readings })
-    print(payload_json)
+        readings = []
+        for i in range(reading_count):
+            readings.append(distance())
+            time.sleep(0.1)
+        selected = statistics.median(readings)
+        if selected < 40:
+            position = "open"
+        else:
+            position = "closed"
+        if position != previous_position:
+            payload_json = json.dumps({ "t": timestamp, "position":position, 
+                "previous_position":previous_position, "selected":selected, 
+                "readings":readings })
+            print(payload_json, flush=True)
+            previous_position = position
+        time.sleep(1)
 
 finally:
     GPIO.cleanup()
