@@ -14,12 +14,26 @@ An alternative is to poll the sensor and only publish changes in state. The conc
 
 ## Usage
 
+Sender - on a Raspberry Pi
+
+NOTE: Path, host and topic appropriate for testing
+
 ```text
 scp garage-door-position.py pi@dorman://home/pi/testbin
 # on dorman
 /home/pi/testbin/garage-door-position.py | mosquitto_pub -l -t "DEV/${HOSTNAME}/garage/door" -h mqtt
 # on any
 mosquitto_sub -v -h mqtt -t DEV/\#
+```
+
+Controller - on any convenient host.
+
+NOTE: The python script that controls the TP-Link sockets is written in Python2 and not easily portable to Python3. 
+
+NOTE: Path and topic appropriate for testing
+
+```text
+mosquitto_sub -v -h polana -t DEV/# | ./control-garage-lighting.py
 ```
 
 ## Errata
