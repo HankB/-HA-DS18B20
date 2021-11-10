@@ -27,9 +27,11 @@ def timer_thread():
         if timer_closed != 0 and timer_closed < time.time():     # timer expired?
             if position == "closed":    # still closed
                 print("turn off light")
+                os.system("/home/hbarta/bin/tplink-smartplug.py -t 192.168.20.62 -c off")
             timer_closed = 0            # reset timer
         if timer_open != 0 and timer_open < time.time():       # timer expired?
             print("turn off light")
+            os.system("/home/hbarta/bin/tplink-smartplug.py -t 192.168.20.62 -c off")
             timer_open = 0              # reset timer
         time.sleep(10)                       # sleep 10 seconds
 
@@ -48,6 +50,7 @@ for line in fileinput.input():
         timer_closed = time.time() + 180
     elif jp["position"] == 'open':
         print("turn on and start 10 min light off timer")
+        os.system("/home/hbarta/bin/tplink-smartplug.py -t 192.168.20.62 -c on")
         timer_open = time.time() + 600
     else:
         print("unknown position received")
