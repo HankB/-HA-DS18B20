@@ -12,6 +12,7 @@ import fileinput
 import json
 import time
 import threading
+import os
 
 timer_closed = 0  # timing light off, 0 => off. Otherwise time.time() to turn off
 timer_open = 0    # timing light off, 0 => off. Otherwise time.time() to turn off
