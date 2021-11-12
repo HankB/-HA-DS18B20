@@ -3,6 +3,8 @@ import RPi.GPIO as GPIO
 import time
 import statistics
 import json
+import socket
+import os
 
 # --------------------------------------------------------------------
 # PINS MAPPING AND SETUP
