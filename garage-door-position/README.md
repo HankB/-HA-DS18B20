@@ -19,11 +19,17 @@ Sender - on a Raspberry Pi
 NOTE: Path, host and topic appropriate for testing
 
 ```text
-scp garage-door-position.py pi@dorman://home/pi/testbin
+scp garage-door-position.py pi@brandywine:/home/pi/bin
 # on dorman
-/home/pi/testbin/garage-door-position.py | mosquitto_pub -l -t "DEV/${HOSTNAME}/garage/door" -h mqtt
+/home/pi/bin/garage-door-position.py | mosquitto_pub -l -t "HA/${HOSTNAME}/garage/door" -h mqtt
 # on any
 mosquitto_sub -v -h mqtt -t DEV/\#
+```
+
+Once rolled out on `brandywine` the following entry in `/etc/rc.local` runs the process.
+
+```text
+runuser -u pi $(sleep 10; /home/pi/bin/garage-door-position.py | /usr/bin/mosquitto_pub -l -t "HA/${HOSTNAME}/garage/door" -h mqtt) 2>&1 >/tmp/rd.local.door.err &
 ```
 
 Controller - on any convenient host.
@@ -33,7 +39,7 @@ NOTE: The python script that controls the TP-Link sockets is written in Python2 
 NOTE: Path and topic appropriate for testing
 
 ```text
-mosquitto_sub -v -h polana -t DEV/# | ./control-garage-lighting.py
+mosquitto_sub -v -h mqtt -t HA/+/garage/door | /home/hbarta/bin/control-garage-lighting.py
 ```
 
 ## Errata

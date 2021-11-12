@@ -63,11 +63,13 @@ def distance():
 # MAIN LOOP
 # --------------------------------------------------------------------
 
-# Collect 5 readings and write out.
+# Collect 5 readings and publish.
 
 
 reading_count = 5
 previous_position = "unknown"
+topic = str.format("HA/{}/garage/door", socket.gethostname())
+
 
 try:
     while True:
@@ -86,7 +88,10 @@ try:
             payload_json = json.dumps({ "t": timestamp, "position":position, 
                 "previous_position":previous_position, "selected":selected, 
                 "readings":readings })
-            print(payload_json, flush=True)
+            cmd = str.format("/usr/bin/mosquitto_pub -h mqtt -t {} -m \"{}\"",
+                            topic, payload_json)
+            print(cmd)
+            os.system(cmd)            
             previous_position = position
         time.sleep(1)
 
