@@ -34,6 +34,28 @@ Once rolled out on `brandywine` the following entry in `/etc/rc.local` runs the 
 runuser -u pi $(sleep 10; /home/pi/bin/garage-door-position.py | /usr/bin/mosquitto_pub -l -t "HA/${HOSTNAME}/garage/door" -h mqtt) 2>&1 >/tmp/rd.local.door.err &
 ```
 
+That was an earlier version. `garage-door-position.py` has been modified to internally invoke the publish command. It seemed at one point that the previous code stopped publishing at some point. (Seems odd but that was during the shit show phase of rollout so could have been some other problem.) With the internal invocation of `mosquitto_pub` it will connect, publish one message, disconnect and exit. The following setup kicks it off.
+
+```text
+pi@brandywine:~ $ crontab -l
+.
+.
+.
+# m h  dom mon dow   command
+*  * * * * /home/pi/bin/temp_humidity_cron.sh garage_north mqtt >/tmp/temp_humidity_cron.txt 2>&1
+
+#@reboot sleep 10; /home/pi/bin/garage-door-position.py | /usr/bin/mosquitto_pub -l -t "HA/brandywine/garage/door" -h mqtt 2>&1 >/tmp/reboot.door.ttxtxt
+@reboot /home/pi/bin/do-garage.sh
+#@reboot sleep 10; /home/pi/bin/garage-door-position.py 2>&1 >/tmp/rd.local.door.err &
+
+pi@brandywine:~ $ cat /home/pi/bin/do-garage.sh
+#/bin/bash
+sleep 20
+/home/pi/bin/garage-door-position.py >/tmp/door.txt 2>&1
+
+pi@brandywine:~ $ 
+```
+
 ### Controller
 
 On any convenient host. (`polana`. Eventually.)
