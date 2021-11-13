@@ -23,6 +23,15 @@ sensor program and pipe the output to `mosquitto_pub`.
 
 * Mosquitto library
 
+### Wiring connections
+
+|HTU21D|Pi|Pin#|
+|---|---|---|
+|+|3V3|1 (or 17)|
+|-|Gnd|9 (or ...)|
+|DA|SDA|3|
+|CL|SCL|5|
+
 ### To build
 
 ```text

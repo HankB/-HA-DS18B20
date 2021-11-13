@@ -5,27 +5,28 @@ EXTRA_LIBS=-lwiringPi
 OBJ = HTU21D_publish.o mosquitto_MQTT.o HTU21D.o
 TEST_OBJ = HTU21D.o HTU21D_test.o
 REPORT_OBJ = HTU21D.o HTU21D_report.o
+HEADERS = HTU21D.h  MQTT.h
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-HTU21D_report: $(REPORT_OBJ)
+HTU21D_report: $(REPORT_OBJ) $(HEADERS)
 	$(CC) -o $@ $^ $(CFLAGS) $(EXTRA_LIBS)
 
-HTU21D_publish: $(OBJ)
+HTU21D_publish: $(OBJ)  $(HEADERS)
 	$(CC) -o $@ $^ $(CFLAGS) $(EXTRA_LIBS) -lmosquitto
 
-HTU21D_test: $(TEST_OBJ)
+HTU21D_test: $(TEST_OBJ)  $(HEADERS)
 	$(CC) -o $@ $^ $(CFLAGS) $(EXTRA_LIBS)
 
-test_MQTT: mosquitto_MQTT.o t_mosquitto_MQTT.o
+test_MQTT: mosquitto_MQTT.o t_mosquitto_MQTT.o  $(HEADERS)
 	$(CC) -o $@ mosquitto_MQTT.o t_mosquitto_MQTT.o $(CFLAGS) -lmosquitto
 
 .PHONY: clean
 
 clean:
 	rm -f $(OBJ) $(TEST_OBJ) $(REPORT_OBJ) t_mosquitto_MQTT.o HTU21D_test\
-			test_MQTT HTU21D_publish
+			test_MQTT HTU21D_publish HTU21D_report
 
 install:
 	mkdir -p ~/bin
