@@ -116,3 +116,10 @@ line should enable the service at boot.
 sudo systemctl enable temp_mon
 ```
 
+## Monitoring
+
+Monitor all temperature/humidity readings with
+
+```text
+mosquitto_sub -v -h mqtt -t +/+/+/temp_humidity
+```
