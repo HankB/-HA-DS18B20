@@ -14,7 +14,9 @@ An alternative is to poll the sensor and only publish changes in state. The conc
 
 ## Usage
 
-Sender - on a Raspberry Pi
+### Sender
+
+On a Raspberry Pi in the garage. (`branddywine`)
 
 NOTE: Path, host and topic appropriate for testing
 
@@ -32,18 +34,37 @@ Once rolled out on `brandywine` the following entry in `/etc/rc.local` runs the 
 runuser -u pi $(sleep 10; /home/pi/bin/garage-door-position.py | /usr/bin/mosquitto_pub -l -t "HA/${HOSTNAME}/garage/door" -h mqtt) 2>&1 >/tmp/rd.local.door.err &
 ```
 
-Controller - on any convenient host.
+### Controller
 
-NOTE: The python script that controls the TP-Link sockets is written in Python2 and not easily portable to Python3. 
+On any convenient host. (`polana`. Eventually.)
 
-NOTE: Path and topic appropriate for testing
+NOTE: The python script that controls the TP-Link sockets is written in Python2 and not trivially portable to Python3. 
+
+NOTE: Path and topic appropriate for production.
 
 ```text
+scp control-garage-lighting.py hbarta@allred:/home/hbarta/bin
+scp control-garage-lighting.py pi@polana:/home/pi/bin/
+.
+.
+.
 mosquitto_sub -v -h mqtt -t HA/+/garage/door | /home/hbarta/bin/control-garage-lighting.py
+```
+
+In `/etc/rc.local` the following works
+
+```text
+su hbarta -c 'sleep 10; /usr/bin/mosquitto_sub -v -h mqtt -t HA/+/garage/door | /home/hbarta/bin/control-garage-lighting.py 2>&1 > /tmp/rc.local.garage-light.err' &
+```
+
+Also can be put in user's cron.
+
+```text
+@reboot sleep 10; /usr/bin/mosquitto_sub -v -h mqtt -t HA/+/garage/door | /home/hbarta/bin/control-garage-lighting.py 2>&1 > /tmp/rc.local.garage-light.err
 ```
 
 ## Errata
 
-It will be wise to filter saving these messages to avoid flooding the MQTT message database with these messages. It will also be necessary to schedule these by means other than `cron` since granularity of `cron` timing is 1/minute.
+It will be necessary to schedule these by means other than `cron` since granularity of `cron` timing is 1/minute.
 
 Alternatives [IR "avoidance" sensor](https://smile.amazon.com/gp/product/B07T91JXHW/)
