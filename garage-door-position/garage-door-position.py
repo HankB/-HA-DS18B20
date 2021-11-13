@@ -90,7 +90,7 @@ try:
             payload_json = json.dumps({ "t": timestamp, "position":position, 
                 "previous_position":previous_position, "selected":selected, 
                 "readings":readings })
-            cmd = str.format("/usr/bin/mosquitto_pub -h mqtt -t {} -m \"{}\"",
+            cmd = str.format("/usr/bin/mosquitto_pub -h mqtt -t {} -m \'{}\'",
                             topic, payload_json)
             print(cmd)
             os.system(cmd)            
