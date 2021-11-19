@@ -140,3 +140,15 @@ Will leave running for a while to see how this goes. Will take a look at the sen
 ```text
 mosquitto_sub -v -t +/brandywine/# -h mqtt
 ```
+
+## 2021-11-19 replace sensor
+
+There were so many spurious readings. Replaced (and mounted better) sensor. Readings look much much better.
+
+```text
+HA/brandywine/garage/door {"position": "open", "t": 1637341005, "readings": [35.103023052215576, 35.532355308532715, 36.11706495285034, 35.10711193084717, 35.622310638427734], "selected": 35.532355308532715, "previous_position": "closed"}
+.
+.
+.
+HA/brandywine/garage/door {"position": "closed", "t": 1637344222, "readings": [257.59117603302, 258.76877307891846, 257.46850967407227, 257.5870871543884, 256.6466450691223], "selected": 257.5870871543884, "previous_position": "open"}
+```
