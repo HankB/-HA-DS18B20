@@ -85,6 +85,21 @@ Also can be put in user's cron.
 @reboot sleep 10; /usr/bin/mosquitto_sub -v -h mqtt -t HA/+/garage/door | /home/hbarta/bin/control-garage-lighting.py 2>&1 > /tmp/rc.local.garage-light.err
 ```
 
+## Results
+
+There are a *lot* of false open interpretations. Lights going on all times of day and night. Temperature was colder overnight. Is that the issue? From <> I get "Working Temperature:  -15°C to 70°C" which is 5°F on the low end. Didn't get that cold. Will try the shielding trick using a tube over the sensor/emitter. Inherent problem with the Raspberry Pi Zero?
+
+First try - try another sensor. Also remount, perhaps better. Here are the readings
+
+```text
+/usr/bin/mosquitto_pub -h mqtt -t HA/brandywine/garage/door -m '{"position": "closed", "t": 1637340891, "readings": [256.2009572982788, 256.6957116127014, 257.0555329322815, 257.38264322280884, 257.0555329322815], "selected": 257.0555329322815, "previous_position": "unknown"}'
+
+
+/usr/bin/mosquitto_pub -h mqtt -t HA/brandywine/garage/door -m '{"position": "open", "t": 1637341005, "readings": [35.103023052215576, 35.532355308532715, 36.11706495285034, 35.10711193084717, 35.622310638427734], "selected": 35.532355308532715, "previous_position": "closed"}'
+```
+
+The 'closed' distances are striking! And look correct. "Open" readings look better too. Will watch for a while.
+
 ## Errata
 
 It will be necessary to schedule these by means other than `cron` since granularity of `cron` timing is 1/minute.
