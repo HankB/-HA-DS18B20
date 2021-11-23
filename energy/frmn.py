@@ -127,7 +127,7 @@ def publish_power(timestamp, I, V, W): # I, V, P => amps, volts. watts
             #.format(timestamp,float(I), float(V), float(W))
     payload_json = json.dumps({ "t": timestamp, "current":I, "volts":V, "watts":W })
     if verbose: print("publishing", payload_json)
-    client.publish(topic,payload_json, qos=0, retain=True)    
+    client.publish(topic,payload_json, qos=0, retain=False)    
 
 """ 
 Delay to the next minute interval some integral number of intervals
