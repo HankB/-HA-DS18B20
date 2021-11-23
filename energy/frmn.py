@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 
 """
 Monitor TP-Link HS-100 smartplug to determine when freezer door is left ajar
@@ -32,7 +32,7 @@ import re
 import time
 import json
 
-version = 0.5
+version = 0.6
 verbose = 0
 
 """
