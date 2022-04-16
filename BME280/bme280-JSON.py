@@ -29,11 +29,18 @@ print(data.timestamp)
 print(data.temperature)
 print(data.pressure)
 print(data.humidity)
-'''
-
-payload_json = json.dumps({ "t": timeStamp, "sensor":data.id, "temp":data.temperature,
-    "humid":data.humidity, "press": data.pressure})
-print(payload_json)
 # there is a handy string representation too
 # print(data)
 
+output w/ sensor ID
+payload_json = json.dumps({ "t": timeStamp, "sensor":str(data.id), "temp":data.temperature,
+    "humid":data.humidity, "press": data.pressure})
+{"t": 1650071788, "sensor": "ab2231e9-f8a8-4401-bb3b-5e64b9bdd82a", "temp": 20.66131623799447, "humid": 40.14417116321544, "press": 986.8545360477743}
+
+With rounding
+{"t": 1650072149, "temp": 21.23, "humid": 38, "press": 987.05}
+'''
+
+payload_json = json.dumps({ "t": timeStamp, "temp":round(data.temperature/5*9+32, 2), 
+    "humid":round(data.humidity), "press":round(data.pressure, 2)})
+print(payload_json, end = '')
