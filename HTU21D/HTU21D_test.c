@@ -19,8 +19,8 @@ int main ()
 	
 	for(;;) {
 		printf("%5.2f°F %5.2f%%\n",
-                getTemperature(fd)/5.0*9.0+32,
-                getHumidity(fd));
+                getTemperature(fd).val/5.0*9.0+32,
+                getHumidity(fd).val);
 		usleep(10);
 	}
 	
