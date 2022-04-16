@@ -4,6 +4,13 @@
 Script to read the temperature from a DS18B20
 see https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/software
 for original code
+
+New requirement: Temperature readings are periodic making it 
+challenging to identify trends. Periodicity is about 2 hours.
+Upgrade is to compute a running average over a predetermined 
+time period (e.g number of samples) and add that to the output.
+Since the program does not stay resident, it will be necessary 
+to write the samples to a file between runs.
 """
 import glob
 import time

@@ -5,7 +5,7 @@ smart outlet. Related to this is a script that monitors temperatyre using a DS18
 temperature sensor connected to a Raspberry Pi Zero
 (`.../home_automation-MQTT-sensors/DS18B20`).
 
-## Usage
+## Usage/Installation
 
 ```text
 hbarta@olive05:/mnt/home/hbarta/Programming/home_automation-MQTT-sensors/energy$ ./frmn.py -h
@@ -30,7 +30,14 @@ hbarta@olive05:/mnt/home/hbarta/Programming/home_automation-MQTT-sensors/energy$
 ### systemd
 
 ```text
+mkdir /home/hbarta/freezer_pwr
+sudo apt install python-paho-mqtt
+sudo cp *.service /etc/systemd/system/
+sudo systemctl start freezer_pwr
+sudo systemctl enable freezer_pwr
 sudo systemctl status freezer_pwr
+sudo systemctl start fridge_pwr
+sudo systemctl enable fridge_pwr
 sudo systemctl status fridge_pwr
 ```
 ## Modules
@@ -44,7 +51,7 @@ Install paho-mqtt following instructions at https://www.eclipse.org/paho/clients
     `pip install paho-mqtt`
 or
 
-    `sudo apt install python3-paho-mqtt`
+    `sudo apt install python-paho-mqtt`
 
 ## Status
 
