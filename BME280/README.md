@@ -10,7 +10,7 @@ And seems not to be working. :( Soldered pins on another and it does seem to wor
 
 Found  a C program that reads the DHT11 and wish to use C for the BME 280 as well. Found one at https://github.com/andreiva/raspberry-pi-bme280. Even puts out the results formatted as JSON! But it requires WiringPi lib.
 
-I should have made a note of the source for the 2 Python scripts as I can't find one of them now. Did find samples at https://www.raspberrypi-spy.co.uk/2016/07/using-bme280-i2c-temperature-pressure-sensor-in-python/ along with Python code for the DHT11.
+I should have made a note of the source for the 2 Python scripts as I can't find one of them now. Did find samples at https://www.raspberrypi-spy.co.uk/2016/07/using-bme280-i2c-temperature-pressure-sensor-in-python/ along with Python code for the DHT11. I have a tab open to one of the pages: <https://pypi.org/project/RPi.bme280/>
 
 And requirements.
 
