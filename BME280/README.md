@@ -16,6 +16,15 @@ I should have made a note of the source for the 2 Python scripts as I can't find
 
 And requirements.
 
+## Wiring
+
+<http://oak:8100/hosts/Raspberry-Pi/Status/>
+
+* 3V3, pin #1
+* GPIO 2/SDA, pin #3
+* GPIO 3/SCL, pin #5
+* GND, pin #6
+
 ## Deploy
 
 ```
