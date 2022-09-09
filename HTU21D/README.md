@@ -1,5 +1,7 @@
 # Acknowledgements 
 
+## ABANDONED - work continues at <http://oak:8080/HankB/HA-HTU21D>
+
 ## HTU21D
 
 The original HTU21D code in this directory (slightly modified prior to
