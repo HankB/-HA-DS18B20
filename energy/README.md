@@ -1,5 +1,7 @@
 # Support energy monitoring
 
+Abandoned - please see <http://oak:8080/HankB/HA-energy> where this continues.
+
 This is used to monitor the energy used by the basement freezer using a TP-Link HS-110
 smart outlet. Related to this is a script that monitors temperatyre using a DS18B20
 temperature sensor connected to a Raspberry Pi Zero
