@@ -45,6 +45,8 @@ Install `mosquitto-clients`
 sudo apt install mosquitto-clients
 ```
 
+Ansible playbook? Next time.
+
 ### ds18b20-test.py
 
 Test script to read sensor, report results and exit. Does not require paho-mqtt.
@@ -63,3 +65,4 @@ The following files are obsolete following the move to a cron job from a systemd
 
 * Hosts and topic are presently hard coded.
 * There are no unit tests for the Python code.
+* Provide an Ansible playbok for installation.
