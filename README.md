@@ -1,12 +1,65 @@
-# home_automation-MQTT-sensors
-##### `ssh://git@oak:10022/HankB/home_automation-MQTT-sensors.git`
+# Support DS18B20 sensor
 
-Various scripts and programs to read sensors and publish to the MQTT server
-on oak. Many of these are intended to execute on a Raspberry Pi and read
-sensors connected to GPIO pins. Others execute on any convenient Linux host.
+This is used to monitor the basement freezer temperature. Related to this is
+a script that monitors power usage for the freezer using a TP-Link HS110. (in
+`.../home_automation-MQTT-sensors/energy`)
 
-## Modules
+## Strategy
 
-* DS18B20 - Read temperature from this sensor and publish. Read power usage from HS110 and publish. Used to monitor basement freezer operation.
-* HTU21D - Read temperature from HTU21D sensor and publish or write to standard output (publish using `mosquitto_pub`)
-* weather - Fetch weather from an Internet source in order to compare to outdoor temperature and humidity readings.
+Use the DS18B20 temperature sensor to read freezer temperature. Write the result to STDOUT in a format suitable tp pipe to `mosquitto_pub` to publish to the MQTT broker on `oak`.
+
+## Usage
+
+* Copy `ds18b20-temp.py` and `publish-freezer-temp.sh` to `/home/pi/bin`.
+* Add a cron job to execute on the desired interval.
+
+```cron
+*/5 * * * * /home/pi/bin/publish-freezer-temp.sh
+```
+
+## Components
+
+### ds18b20-temp.py
+
+See https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/overview
+
+Script to read temperatures from a DS18B20 temperature sensor connected to a
+Raspberry Pi and write to STDOUT in a format suitable for the home automation 
+project.
+
+```shell
+pi@niwot:~/Documents/home_automation-MQTT-sensors/DS18B20 $ ./ds18b20-temp.py
+  1553183625, -6.2
+pi@niwot:~/Documents/home_automation-MQTT-sensors/DS18B20 $
+```
+
+### Requirements
+
+Enable 1 wire interface on Raspberry Pi.
+
+* Add `dtoverlay=w1-gpio` to the end of `/boot/config.txt`.
+
+Install `mosquitto-clients`
+
+```shell
+sudo apt install mosquitto-clients
+```
+
+### ds18b20-test.py
+
+Test script to read sensor, report results and exit. Does not require paho-mqtt.
+
+### Status
+
+Working in production.
+
+#### Obsolete
+
+The following files are obsolete following the move to a cron job from a systemd service.
+
+* freezer_temp.service
+
+### TODO
+
+* Hosts and topic are presently hard coded.
+* There are no unit tests for the Python code.
